@@ -440,10 +440,11 @@ class FileRefTagsViewProvider implements vscode.WebviewViewProvider {
         .modal-content {
             background-color: #252526;
             margin: 15% auto;
-            padding: 16px;
+            padding: 12px;
             border: 1px solid #3e3e42;
             border-radius: 4px;
-            width: 300px;
+            width: 220px;
+            max-width: 90%;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
         }
         .modal-header {
