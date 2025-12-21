@@ -16,6 +16,54 @@
       {
         "command": "file-ref-tags.helloWorld",
         "title": "Hello World"
+      },
+      {
+        "command": "file-ref-tags.addCurrentFile",
+        "title": "添加当前文件到面板",
+        "category": "FileRefTags"
+      },
+      {
+        "command": "file-ref-tags.addFileAndSnippet",
+        "title": "添加当前文件+选中的片段到面板",
+        "category": "FileRefTags"
+      },
+      {
+        "command": "file-ref-tags.addGlobalUniqueSnippet",
+        "title": "添加当前选中的全局唯一片段到面板",
+        "category": "FileRefTags"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "submenu": "file-ref-tags.submenu",
+          "title": "FileRefTags",
+          "group": "navigation"
+        }
+      ],
+      "file-ref-tags.submenu": [
+        {
+          "command": "file-ref-tags.addCurrentFile",
+          "group": "file-ref-tags@1"
+        },
+        {
+          "command": "file-ref-tags.addFileAndSnippet",
+          "group": "file-ref-tags@2"
+        },
+        {
+          "command": "file-ref-tags.addGlobalUniqueSnippet",
+          "group": "file-ref-tags@3"
+        }
+      ]
+    },
+    "submenus": [
+      {
+        "id": "file-ref-tags.submenu",
+        "label": "FileRefTags",
+        "icon": {
+          "light": "resources/icon.svg",
+          "dark": "resources/icon.svg"
+        }
       }
     ],
     "viewsContainers": {
