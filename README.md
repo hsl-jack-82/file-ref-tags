@@ -1,10 +1,145 @@
+# File Ref Tags - VSCode Code Reference Management Extension
+
+## Overview
+
+File Ref Tags is a VSCode extension for managing and quickly accessing code references. It allows users to add files, code snippets, and comments to a reference panel, enabling fast navigation to corresponding locations and improving development efficiency for large projects.
+
+## Features
+
+### Core Features
+- **Add Current File**: Add the current open file to the reference panel
+- **Add File + Snippet**: Add the current file and selected code snippet to the reference panel
+- **Add Global Snippet**: Add the selected globally unique snippet to the reference panel
+- **Add User Comment**: Add custom comments to the reference panel
+- **Type Color Differentiation**: Different colors for different types of reference items
+  - File: Deep blue
+  - File + Snippet: Deep pink
+  - Global Snippet: Deep purple
+  - Comment: Deep green
+- **Drag and Drop Sorting**: Support dragging to reorder reference items
+- **Quick Jump**: Click reference items to quickly jump to corresponding locations
+- **Edit Title**: Hover to show edit button, click to modify title in popup
+- **Delete Reference**: Hover to show delete button, click to delete reference items
+- **View Storage Location**: Show the storage location of reference data
+
+## Installation
+
+1. Open VSCode
+2. Click the Extensions icon in the left activity bar (or press `Ctrl+Shift+X`)
+3. Enter "File Ref Tags" in the search box
+4. Click the "Install" button
+5. After installation, click the "Enable" button
+
+## Usage
+
+### 1. Open Reference Panel
+
+Find the "File Ref Tags" icon in the left activity bar of VSCode and click to open the reference panel.
+
+### 2. Add Reference Items
+
+#### 2.1 Add Current File
+
+- Open the file you want to add
+- Right-click in the editor, select "FileRefTags" → "Add Current File to Panel"
+- Or use the command palette (`Ctrl+Shift+P`) and enter "FileRefTags: Add Current File to Panel"
+
+#### 2.2 Add Current File + Selected Snippet
+
+- Open a file and select the code snippet you want to add
+- Right-click in the editor, select "FileRefTags" → "Add Current File + Selected Snippet to Panel"
+- Or use the command palette and enter "FileRefTags: Add Current File + Selected Snippet to Panel"
+
+#### 2.3 Add Selected Globally Unique Snippet
+
+- Open a file and select the code snippet you want to add
+- Right-click in the editor, select "FileRefTags" → "Add Current Selected Globally Unique Snippet to Panel"
+- Or use the command palette and enter "FileRefTags: Add Current Selected Globally Unique Snippet to Panel"
+- The extension will automatically search the workspace to ensure the snippet is unique
+
+#### 2.4 Add User Comment
+
+- Right-click in the editor, select "FileRefTags" → "Add User Comment to Panel"
+- Or use the command palette and enter "FileRefTags: Add User Comment to Panel"
+- Enter the comment content in the popup input box and click OK
+
+### 3. Manage Reference Items
+
+#### 3.1 Edit Reference Item Title
+
+- Hover over the reference item, an edit button will appear on the right
+- Click the edit button, modify the title in the popup window
+- Click the "Save" button or press `Enter` to save
+- Click the "Cancel" button or press `Escape` to cancel
+
+#### 3.2 Delete Reference Item
+
+- Hover over the reference item, a delete button will appear on the right
+- Click the delete button, the reference item will be deleted
+
+#### 3.3 Drag and Drop Sorting
+
+- Click and drag the reference item to the target position
+- Release the mouse, the reference item will be moved to the new position
+
+#### 3.4 Jump to Reference Location
+
+- Click the reference item, the extension will automatically jump to the corresponding file or code snippet
+- For file + snippet and global snippet types, the corresponding code snippet will be automatically selected
+
+#### 3.5 View Storage Location
+
+- Click the "Show Storage Location" button at the bottom of the reference panel
+- The extension will show the JSON file that stores the reference data in the file explorer
+
+## Data Storage
+
+Reference data is stored in the `references.json` file under VSCode extension's global storage directory, which can be viewed through the "Show Storage Location" button.
+
+## Technical Features
+
+- **Lightweight and Efficient**: Low resource usage, fast response speed
+- **Easy to Use**: Simple operation, easy to get started
+- **Clear Visuals**: Color differentiation for different types of reference items, clear at a glance
+- **Space Efficient**: Compact layout design, maximizing display space
+- **Comprehensive Functions**: Support multiple reference types and operation methods
+
+## System Requirements
+
+- VSCode Version: ^1.107.0
+- Operating System: Supports Windows, macOS, and Linux
+
+## Changelog
+
+### v0.0.1
+
+- Initial version
+- Support adding files, file + snippet, global snippet, and comments
+- Support drag and drop sorting and quick jumping
+- Support editing reference item titles
+- Support color differentiation for different types of reference items
+
+## Feedback and Suggestions
+
+If you encounter any issues or have any suggestions during use, welcome to submit Issues or Pull Requests in the GitHub repository.
+
+## License
+
+This project uses the [MIT License](LICENSE), copyright belongs to LiRenTech.
+
+---
+
+**Enjoy coding with File Ref Tags!**
+
+---
+
 # File Ref Tags - VSCode 代码引用管理插件
 
 ## 功能介绍
 
 File Ref Tags 是一个 VSCode 扩展插件，用于管理和快速访问代码引用。它允许用户将文件、代码片段和注释添加到引用面板中，并通过点击快速跳转到对应的位置，提高大型项目的开发效率。
 
-### 核心功能
+## 核心功能
 
 - **添加当前文件**：将当前打开的文件添加到引用面板
 - **添加文件+片段**：将当前文件和选中的代码片段添加到引用面板
@@ -24,7 +159,7 @@ File Ref Tags 是一个 VSCode 扩展插件，用于管理和快速访问代码�
 ## 安装方法
 
 1. 打开 VSCode
-2. 点击左侧活动栏的扩展图标
+2. 点击左侧活动栏的扩展图标（或按 `Ctrl+Shift+X`）
 3. 在搜索框中输入 "File Ref Tags"
 4. 点击 "安装" 按钮
 5. 安装完成后，点击 "启用" 按钮
@@ -33,14 +168,14 @@ File Ref Tags 是一个 VSCode 扩展插件，用于管理和快速访问代码�
 
 ### 1. 打开引用面板
 
-在 VSCode 左侧活动栏中找到 "File Ref Tags" 像标签一样的图标，点击即可打开引用面板。
+在 VSCode 左侧活动栏中找到 "File Ref Tags" 图标，点击即可打开引用面板。
 
 ### 2. 添加引用项
 
 #### 2.1 添加当前文件
 
 - 打开需要添加的文件
-- 右键点击编辑器，右键菜单中选择 "FileRefTags" → "添加当前文件到面板"
+- 右键点击编辑器，选择 "FileRefTags" → "添加当前文件到面板"
 - 或使用命令面板 (`Ctrl+Shift+P`) 输入 "FileRefTags: 添加当前文件到面板"
 
 #### 2.2 添加当前文件+选中的片段

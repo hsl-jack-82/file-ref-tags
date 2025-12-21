@@ -1,9 +1,10 @@
 {
   "name": "file-ref-tags",
   "displayName": "file-ref-tags",
-  "description": "VSCode插件，用于管理和快速访问代码引用",
+  "description": "managing and quickly accessing code references, allowing users to add files, code snippets, and comments to a reference panel for quick navigation.",
   "version": "0.0.1",
   "icon": "icon.png",
+  "publisher": "LiRenTech",
   "repository": {
     "type": "git",
     "url": "https://github.com/LiRenTech/file-ref-tags.git"
