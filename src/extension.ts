@@ -396,6 +396,8 @@ class FileRefTagsViewProvider implements vscode.WebviewViewProvider {
             overflow: hidden;
             text-overflow: ellipsis;
             flex: 1;
+        }
+        .reference-item:hover .reference-title {
             margin-right: 50px;
         }
         .reference-actions {
@@ -407,6 +409,10 @@ class FileRefTagsViewProvider implements vscode.WebviewViewProvider {
             gap: 4px;
             opacity: 0;
             transition: opacity 0.2s ease;
+            pointer-events: none;
+        }
+        .reference-item:hover .reference-actions {
+            pointer-events: auto;
         }
         .reference-item:hover .reference-actions {
             opacity: 1;
