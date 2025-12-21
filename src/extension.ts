@@ -331,11 +331,15 @@ class FileRefTagsViewProvider implements vscode.WebviewViewProvider {
             background-color: #252526;
             border: 1px solid #3e3e42;
             border-radius: 4px;
-            padding: 12px;
-            margin-bottom: 8px;
+            padding: 6px 10px;
+            margin-bottom: 4px;
             cursor: pointer;
             transition: all 0.2s ease;
             user-select: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
         }
         .reference-item:hover {
             background-color: #2a2d2e;
@@ -348,50 +352,28 @@ class FileRefTagsViewProvider implements vscode.WebviewViewProvider {
         .reference-item.drag-over {
             border-top: 2px solid #0e639c;
         }
-        .reference-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 8px;
-        }
         .reference-title {
             font-size: 14px;
             font-weight: 500;
             margin: 0;
-        }
-        .reference-type {
-            font-size: 12px;
-            padding: 2px 6px;
-            border-radius: 10px;
-            background-color: #0e639c;
-            color: white;
-        }
-        .reference-type.file {
-            background-color: #0e639c;
-        }
-        .reference-type.file-snippet {
-            background-color: #68217a;
-        }
-        .reference-type.global-snippet {
-            background-color: #007d4a;
-        }
-        .reference-type.comment {
-            background-color: #5a5a5a;
-        }
-        .reference-content {
-            font-size: 12px;
-            color: #858585;
-            margin: 0;
-            word-break: break-all;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            flex: 1;
+            margin-right: 20px;
         }
         .delete-btn {
             background: none;
             border: none;
             color: #858585;
             cursor: pointer;
-            font-size: 14px;
-            padding: 4px;
+            font-size: 16px;
+            padding: 2px 6px;
             border-radius: 2px;
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
         }
         .delete-btn:hover {
             color: #ff6b6b;
@@ -492,39 +474,10 @@ class FileRefTagsViewProvider implements vscode.WebviewViewProvider {
                     }
                 });
 
-                // 类型显示
-                let typeLabel = '文件';
-                if (reference.type === 'file-snippet') {
-                    typeLabel = '文件+片段';
-                } else if (reference.type === 'global-snippet') {
-                    typeLabel = '全局片段';
-                } else if (reference.type === 'comment') {
-                    typeLabel = '注释';
-                }
-
-                // 内容显示
-                let content = '';
-                if (reference.filePath) {
-                    content = reference.filePath;
-                } else if (reference.snippet) {
-                    content = reference.snippet.substring(0, 100) + (reference.snippet.length > 100 ? '...' : '');
-                }
-
                 // 使用DOM API创建元素，避免模板字面量语法错误
-                const headerDiv = document.createElement('div');
-                headerDiv.className = 'reference-header';
-
                 const titleH3 = document.createElement('h3');
                 titleH3.className = 'reference-title';
                 titleH3.textContent = reference.title;
-
-                const typeDiv = document.createElement('div');
-                typeDiv.className = 'reference-type ' + reference.type;
-                typeDiv.textContent = typeLabel;
-
-                const contentP = document.createElement('p');
-                contentP.className = 'reference-content';
-                contentP.textContent = content;
 
                 const deleteBtn = document.createElement('button');
                 deleteBtn.className = 'delete-btn';
@@ -533,10 +486,7 @@ class FileRefTagsViewProvider implements vscode.WebviewViewProvider {
                     vscode.postMessage({ command: 'deleteReference', id: reference.id });
                 };
 
-                headerDiv.appendChild(titleH3);
-                headerDiv.appendChild(typeDiv);
-                li.appendChild(headerDiv);
-                li.appendChild(contentP);
+                li.appendChild(titleH3);
                 li.appendChild(deleteBtn);
 
                 list.appendChild(li);
