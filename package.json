@@ -1,7 +1,7 @@
 {
   "name": "file-ref-tags",
-  "displayName": "file-ref-tags",
-  "description": "managing and quickly accessing code references, allowing users to add files, code snippets, and comments to a reference panel for quick navigation.",
+  "displayName": "File Ref Tags",
+  "description": "VSCode extension for managing and quickly accessing code references, allowing users to add files, code snippets, and comments to a reference panel for quick navigation.",
   "version": "0.0.1",
   "icon": "icon.png",
   "publisher": "LiRenTech",
