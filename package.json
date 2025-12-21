@@ -3,6 +3,7 @@
   "displayName": "file-ref-tags",
   "description": "VSCode插件，用于管理和快速访问代码引用",
   "version": "0.0.1",
+  "icon": "icon.png",
   "repository": {
     "type": "git",
     "url": "https://github.com/LiRenTech/file-ref-tags.git"
