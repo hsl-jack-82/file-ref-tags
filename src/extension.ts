@@ -333,14 +333,19 @@ class FileRefTagsViewProvider implements vscode.WebviewViewProvider {
             padding: 0;
             background-color: #1e1e1e;
             color: #d4d4d4;
-            font-size: 12px;
+            font-size: 11px;
+            font-weight: 400;
         }
         .container {
-            padding: 8px 4px;
+            padding: 4px 2px;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
         }
         h1 {
-            font-size: 14px;
-            margin-bottom: 12px;
+            font-size: 12px;
+            margin: 0 0 8px 0;
+            font-weight: 400;
         }
         .empty-state {
             text-align: center;
@@ -353,10 +358,9 @@ class FileRefTagsViewProvider implements vscode.WebviewViewProvider {
             margin: 0;
         }
         .reference-item {
-            border: 1px solid #3e3e42;
-            border-radius: 4px;
-            padding: 6px 10px;
-            margin-bottom: 4px;
+            outline: 1px solid #3e3e42;
+            padding: 0 4px;
+            margin: 0;
             cursor: pointer;
             transition: all 0.2s ease;
             user-select: none;
@@ -364,6 +368,7 @@ class FileRefTagsViewProvider implements vscode.WebviewViewProvider {
             justify-content: space-between;
             align-items: center;
             position: relative;
+            line-height: 22px;
         }
         .reference-item[data-type="file"] {
             background-color: rgba(14, 99, 156, 0.15);
@@ -389,8 +394,8 @@ class FileRefTagsViewProvider implements vscode.WebviewViewProvider {
             border-top: 2px solid #0e639c;
         }
         .reference-title {
-            font-size: 12px;
-            font-weight: 500;
+            font-size: 11px;
+            font-weight: 400;
             margin: 0;
             white-space: nowrap;
             overflow: hidden;
@@ -537,18 +542,18 @@ class FileRefTagsViewProvider implements vscode.WebviewViewProvider {
             background-color: #4e4e53;
         }
         .actions-bar {
-            margin-bottom: 12px;
+            margin-top: 8px;
             display: flex;
-            gap: 6px;
+            gap: 4px;
         }
         .action-btn {
             background-color: #0e639c;
             color: white;
             border: none;
-            padding: 6px 12px;
-            border-radius: 3px;
+            padding: 4px 8px;
+            font-size: 10px;
             cursor: pointer;
-            font-size: 12px;
+            width: 100%;
         }
         .action-btn:hover {
             background-color: #1177bb;
@@ -557,13 +562,14 @@ class FileRefTagsViewProvider implements vscode.WebviewViewProvider {
 </head>
 <body>
     <div class="container">
-        <div class="actions-bar">
-            <button id="show-storage-btn" class="action-btn">Show Storage Location</button>
-        </div>
+        <h1>File References</h1>
         <div id="empty-state" class="empty-state">
             <p>No references yet. Add your first reference!</p>
         </div>
         <ul id="references-list" class="references-list"></ul>
+        <div class="actions-bar">
+            <button id="show-storage-btn" class="action-btn">Show Storage Location</button>
+        </div>
     </div>
 
     <!-- 编辑标题弹窗 -->
