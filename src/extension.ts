@@ -830,6 +830,136 @@ export function activate(context: vscode.ExtensionContext) {
 		vscode.window.registerWebviewViewProvider('file-ref-tags.list-view', webviewViewProvider)
 	);
 
+	// 注册处理URI的逻辑
+	const handleUri = async (uri: vscode.Uri) => {
+		try {
+			// 解析URL查询参数
+			const query = new URLSearchParams(uri.query);
+			const filePath = query.get('filePath');
+			const snippet = query.get('snippet');
+
+			// 确保至少有一个参数
+			if (!filePath && !snippet) {
+				vscode.window.showErrorMessage('URL缺少必要参数：filePath或snippet');
+				return;
+			}
+
+			// 解码参数
+			const decodedFilePath = filePath ? decodeURIComponent(filePath) : undefined;
+			const decodedSnippet = snippet ? decodeURIComponent(snippet) : undefined;
+
+			// 根据参数组合决定跳转模式
+			if (decodedFilePath && decodedSnippet) {
+				// 模式1：file-snippet，跳转到文件并搜索代码片段
+				await jumpToFileAndSnippet(decodedFilePath, decodedSnippet);
+			} else if (decodedFilePath) {
+				// 模式2：file，直接跳转到文件
+				await jumpToFile(decodedFilePath);
+			} else if (decodedSnippet) {
+				// 模式3：global-snippet，全局搜索代码片段
+				await jumpToGlobalSnippet(decodedSnippet);
+			}
+		} catch (error) {
+			console.error('Failed to handle URI:', error);
+			vscode.window.showErrorMessage('处理URL失败');
+		}
+	};
+
+	// 跳转到文件
+	const jumpToFile = async (filePath: string) => {
+		try {
+			const uri = vscode.Uri.file(filePath);
+			await vscode.window.showTextDocument(uri);
+		} catch (error) {
+			console.error('Failed to jump to file:', error);
+			vscode.window.showErrorMessage('跳转到文件失败');
+		}
+	};
+
+	// 跳转到文件并搜索代码片段
+	const jumpToFileAndSnippet = async (filePath: string, snippet: string) => {
+		try {
+			const uri = vscode.Uri.file(filePath);
+			const textEditor = await vscode.window.showTextDocument(uri);
+			const doc = textEditor.document;
+			// 搜索代码片段
+			const text = doc.getText();
+			const index = text.indexOf(snippet);
+			if (index !== -1) {
+				const startPosition = doc.positionAt(index);
+				const endPosition = doc.positionAt(index + snippet.length);
+				const range = new vscode.Range(startPosition, endPosition);
+				await vscode.window.showTextDocument(uri, { selection: range });
+				// 确保选中的内容可见
+				await textEditor.revealRange(range, vscode.TextEditorRevealType.InCenter);
+			} else {
+				vscode.window.showWarningMessage('代码片段已不存在于文件中');
+			}
+		} catch (error) {
+			console.error('Failed to jump to file and snippet:', error);
+			vscode.window.showErrorMessage('跳转到文件并搜索代码片段失败');
+		}
+	};
+
+	// 全局搜索并跳转到代码片段
+	const jumpToGlobalSnippet = async (snippet: string) => {
+		try {
+			// 先获取当前工作区的所有文件
+			const files = await vscode.workspace.findFiles('**/*', '**/node_modules/**', 10000);
+			console.log('搜索文件数量:', files.length);
+			
+			let matchCount = 0;
+			let matchFile: vscode.Uri | undefined;
+			let matchStartPosition: vscode.Position | undefined;
+			let matchEndPosition: vscode.Position | undefined;
+			
+			// 遍历文件，查找包含代码片段的文件
+			for (const file of files) {
+				try {
+					const doc = await vscode.workspace.openTextDocument(file);
+					const text = doc.getText();
+					const index = text.indexOf(snippet);
+					if (index !== -1) {
+						matchCount++;
+						matchFile = file;
+						matchStartPosition = doc.positionAt(index);
+						matchEndPosition = doc.positionAt(index + snippet.length);
+						// 如果超过1个匹配，就可以提前结束
+						if (matchCount > 1) {
+							break;
+						}
+					}
+				} catch (error) {
+					// 忽略无法打开的文件
+					console.error('无法打开文件:', file.fsPath, error);
+					continue;
+				}
+			}
+			
+			console.log('匹配数量:', matchCount);
+			
+			if (matchCount === 1 && matchFile && matchStartPosition && matchEndPosition) {
+				const textEditor = await vscode.window.showTextDocument(matchFile);
+				const range = new vscode.Range(matchStartPosition, matchEndPosition);
+				await vscode.window.showTextDocument(matchFile, { selection: range });
+				// 确保选中的内容可见
+				await textEditor.revealRange(range, vscode.TextEditorRevealType.InCenter);
+			} else if (matchCount === 0) {
+				vscode.window.showWarningMessage('未找到匹配的代码片段');
+			} else {
+				vscode.window.showWarningMessage('代码片段已不是全局唯一');
+			}
+		} catch (error) {
+			console.error('Global search failed:', error);
+			vscode.window.showErrorMessage('全局搜索失败');
+		}
+	};
+
+	// 监听URI激活事件
+	context.subscriptions.push(vscode.window.registerUriHandler({
+		handleUri: handleUri
+	}));
+
 	// The command has been defined in the package.json file
 	// Now provide the implementation of the command with registerCommand
 	// The commandId parameter must match the command field in package.json
